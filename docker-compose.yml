@@ -1,0 +1,11 @@
+services:
+  news-app-auto:
+    build: .
+    container_name: news-app-auto
+    restart: unless-stopped
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
