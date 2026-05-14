@@ -1,18 +1,50 @@
-# React + Vite
+# news-app-auto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## API route configuration
 
-Currently, two official plugins are available:
+The frontend reads a single Vite variable: `VITE_API_BASE_URL`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Local development uses `http://localhost:3001/api`
+- Production uses `/api`
 
-## React Compiler
+That means component code can stay simple and build requests like:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```js
+fetch(`${API_BASE_URL}/health`)
+```
 
-## Expanding the ESLint configuration
+## Environment files
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `.env.development` → `VITE_API_BASE_URL=http://localhost:3001/api`
+- `.env.production` → `VITE_API_BASE_URL=/api`
 
-test
+## Docker build
+
+Because Vite injects env values at build time, the Docker image sets the production default during the build:
+
+```dockerfile
+ARG VITE_API_BASE_URL=/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+```
+
+You can override it when building the image if needed.
+
+`docker-compose.yml` also passes the build arg with `/api` as the default:
+
+```yaml
+args:
+  VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+```
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+## Production build
+
+```bash
+npm run build
+```
