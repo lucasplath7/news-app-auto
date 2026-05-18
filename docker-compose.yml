@@ -1,5 +1,6 @@
 services:
   news-app-auto:
+
     build:
       context: .
       args:

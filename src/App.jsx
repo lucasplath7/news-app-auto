@@ -6,6 +6,8 @@ import './App.css'
 function App() {
   const [resp, setResp] = useState(null)
   const [error, setError] = useState(null)
+  const [dbResp, setDbResp] = useState(null)
+  const [dbError, setDbError] = useState(null)
 
   async function handleClick() {
     setError(null)
@@ -13,7 +15,7 @@ function App() {
     try {
       const response = await fetch(`${API_BASE_URL}/health`)
 
-      if (!response.statusCode === 200) {
+      if (!response.ok) {
         setResp(null)
         setError(`Request failed with status ${response.status}`)
         return
@@ -27,11 +29,34 @@ function App() {
     }
   }
 
+  async function handleDbHealthCheckButton() {
+    setDbError(null)
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/health/db`)
+
+      if (!response.ok) {
+        setDbResp(null)
+        setDbError(`Request failed with status ${response.status}`)
+        return
+      }
+
+      const data = await response.json()
+      setDbResp(data)
+    } catch (err) {
+      setDbResp(null)
+      setDbError(err instanceof Error ? err.message : 'Request failed')
+    }
+  }
+
   return (
     <>
       <button onClick={handleClick}>Click Me</button>
       {resp && <p>{resp.message}</p>}
       {error && <p>{error}</p>}
+      <button onClick={handleDbHealthCheckButton}>DB Check</button>
+      {dbResp && <p>{dbResp.data}</p>}
+      {dbError && <p>{dbError}</p>}
     </>
   )
 }
