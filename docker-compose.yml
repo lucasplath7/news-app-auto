@@ -1,10 +1,13 @@
 services:
-  news-app-auto:
 
+  # ── React frontend ────────────────────────────────────────────────────────────
+  news-app-auto:
     build:
       context: .
       args:
         VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api}
+        VITE_SOCKET_URL: ${VITE_SOCKET_URL:-}
+        VITE_SOCKET_PATH: ${VITE_SOCKET_PATH:-/socket.io}
     container_name: news-app-auto
     restart: unless-stopped
     networks:

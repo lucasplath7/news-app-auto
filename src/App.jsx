@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import { API_BASE_URL } from './config.js'
+import { useSelector } from 'react-redux'
+import apiClient from './store/services/apiClient.js'
+import NewUserContainer from './containers/NewUser/NewUserContainer.jsx'
+import CounterContainer from './containers/Counter/CounterContainer.jsx'
 
 import './App.css'
 
@@ -9,43 +12,27 @@ function App() {
   const [dbResp, setDbResp] = useState(null)
   const [dbError, setDbError] = useState(null)
 
+  const createdUser = useSelector((state) => state.user.user)
+
   async function handleClick() {
     setError(null)
-
     try {
-      const response = await fetch(`${API_BASE_URL}/health`)
-
-      if (!response.ok) {
-        setResp(null)
-        setError(`Request failed with status ${response.status}`)
-        return
-      }
-
-      const data = await response.json()
+      const { data } = await apiClient.get('/health')
       setResp(data)
     } catch (err) {
       setResp(null)
-      setError(err instanceof Error ? err.message : 'Request failed')
+      setError(err?.response ? `Request failed with status ${err.response.status}` : 'Request failed')
     }
   }
 
   async function handleDbHealthCheckButton() {
     setDbError(null)
-
     try {
-      const response = await fetch(`${API_BASE_URL}/health/db`)
-
-      if (!response.ok) {
-        setDbResp(null)
-        setDbError(`Request failed with status ${response.status}`)
-        return
-      }
-
-      const data = await response.json()
+      const { data } = await apiClient.get('/health/db')
       setDbResp(data)
     } catch (err) {
       setDbResp(null)
-      setDbError(err instanceof Error ? err.message : 'Request failed')
+      setDbError(err?.response ? `Request failed with status ${err.response.status}` : 'Request failed')
     }
   }
 
@@ -57,6 +44,20 @@ function App() {
       <button onClick={handleDbHealthCheckButton}>DB Check</button>
       {dbResp && <p>{dbResp.data}</p>}
       {dbError && <p>{dbError}</p>}
+
+      <hr />
+
+      <CounterContainer />
+
+      <hr />
+
+      <NewUserContainer />
+
+      {createdUser && (
+        <p>
+          Welcome, <strong>{createdUser.userName}</strong>! (ID: {createdUser.userId})
+        </p>
+      )}
     </>
   )
 }
