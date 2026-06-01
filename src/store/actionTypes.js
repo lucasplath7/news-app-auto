@@ -1,8 +1,9 @@
-// User action types
-export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST'
-export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS'
-export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE'
+// Feed action types (GET /api/news/feed)
+export const FEED_REQUEST = 'FEED_REQUEST'
+export const FEED_SUCCESS = 'FEED_SUCCESS'
+export const FEED_FAILURE = 'FEED_FAILURE'
 
-// Counter action types
-export const COUNTER_SET     = 'COUNTER_SET'      // initial load or socket broadcast
-export const COUNTER_FAILURE = 'COUNTER_FAILURE'  // initial fetch error
+// Pipeline feed action types (GET /api/news/pipelinefeed)
+export const PIPELINE_FEED_REQUEST = 'PIPELINE_FEED_REQUEST'
+export const PIPELINE_FEED_SUCCESS = 'PIPELINE_FEED_SUCCESS'
+export const PIPELINE_FEED_FAILURE = 'PIPELINE_FEED_FAILURE'
