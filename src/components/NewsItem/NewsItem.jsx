@@ -30,19 +30,8 @@ function NewsItem({ title, summary, createdAt }) {
   const formattedDate = formatPublishedDate(createdAt)
 
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        backgroundColor: 'background.paper',
-        borderColor: 'divider',
-        borderRadius: 2,
-        transition: 'border-color 0.2s ease',
-        '&:hover': {
-          borderColor: 'primary.main',
-        },
-      }}
-    >
-      <CardContent sx={{ p: { xs: 2, sm: 3 }, '&:last-child': { pb: { xs: 2, sm: 3 } } }}>
+    <Card variant="outlined">
+      <CardContent>
         <Typography
           variant="h6"
           component="h2"

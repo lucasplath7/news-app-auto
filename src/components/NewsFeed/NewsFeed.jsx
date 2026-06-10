@@ -93,16 +93,6 @@ function NewsFeed({
             }
           }}
           size="small"
-          sx={{
-            '& .MuiToggleButton-root': {
-              px: { xs: 2, sm: 3 },
-              py: 0.75,
-              fontSize: { xs: '0.75rem', sm: '0.8rem' },
-              textTransform: 'none',
-              letterSpacing: '0.2px',
-              minHeight: '44px',
-            },
-          }}
         >
           <ToggleButton value="feed">Standard</ToggleButton>
           <ToggleButton value="pipelineFeed">Pipeline</ToggleButton>
@@ -127,18 +117,14 @@ function NewsFeed({
             onClick={() => onTopicChange(value)}
             color={activeTopic === value ? 'primary' : 'default'}
             variant={activeTopic === value ? 'filled' : 'outlined'}
-            sx={{
-              fontSize: { xs: '0.75rem', sm: '0.8rem' },
-              height: '36px',
-              minWidth: '44px',
-            }}
+            sx={{ fontSize: { xs: '0.75rem', sm: '0.8rem' } }}
           />
         ))}
       </Box>
 
       {/* Error banner */}
       {error && (
-        <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
+        <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
@@ -182,14 +168,7 @@ function NewsFeed({
             <Button
               variant="outlined"
               onClick={onLoadMoreClick}
-              sx={{
-                px: 4,
-                py: 1,
-                minHeight: '44px',
-                textTransform: 'none',
-                fontSize: '0.875rem',
-                borderRadius: 2,
-              }}
+              sx={{ px: 4, py: 1, fontSize: '0.875rem', borderRadius: 2 }}
             >
               Load more
             </Button>

@@ -1,2 +1,8 @@
-export { ToggleButton as default, ToggleButton } from '@mui/material'
+import { ToggleButton as MUIToggleButton } from '@mui/material'
+
+export function ToggleButton({ sx, ...props }) {
+  return <MUIToggleButton sx={sx} {...props} />
+}
+
+export default ToggleButton
 
